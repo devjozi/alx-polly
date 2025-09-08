@@ -68,12 +68,19 @@ cd alx-prolly
 npm install
 ```
 
-3. Run the development server:
+3. Configure environment variables:
+Create a `.env.local` with:
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+4. Run the development server:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Available Scripts
 
@@ -89,6 +96,8 @@ npm run dev
 - **UI Components**: Shadcn UI
 - **Icons**: Lucide React
 - **State Management**: React Hooks
+- **Database & Auth**: Supabase
+- **QR Codes**: qrcode
 
 ## Key Components
 
