@@ -4,13 +4,11 @@ import { useState } from "react"
 import { PollsList } from "@/components/polls/polls-list"
 import { CreatePollForm } from "@/components/polls/create-poll-form"
 import { usePolls } from "@/hooks/use-polls"
-import { useAuth } from "@/hooks/use-auth"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import withAuth from "@/components/withAuth"
 
-export default function PollsPage() {
+function PollsPage() {
   const { polls, isLoading, createPoll, voteOnPoll } = usePolls()
-  const { isAuthenticated } = useAuth()
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [isCreating, setIsCreating] = useState(false)
 
@@ -37,26 +35,6 @@ export default function PollsPage() {
   const handleViewPoll = (pollId: string) => {
     // TODO: Navigate to individual poll page
     console.log("View poll:", pollId)
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle>Authentication Required</CardTitle>
-            <CardDescription>
-              Please sign in to view and create polls
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button asChild className="w-full">
-              <a href="/auth/login">Sign In</a>
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    )
   }
 
   if (showCreateForm) {
@@ -90,3 +68,5 @@ export default function PollsPage() {
     </div>
   )
 }
+
+export default withAuth(PollsPage)
