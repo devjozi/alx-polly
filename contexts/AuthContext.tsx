@@ -2,8 +2,9 @@
 "use client"
 
 import { createContext, useState, useEffect, useContext } from "react"
+import { User as SupabaseUser } from "@supabase/supabase-js"
 import { supabase } from "@/lib/supabaseClient"
-import { AuthState, User } from "@/types"
+import { AuthState } from "@/types"
 
 const AuthContext = createContext<AuthState>({
   user: null,
@@ -12,7 +13,7 @@ const AuthContext = createContext<AuthState>({
 })
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<SupabaseUser | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
