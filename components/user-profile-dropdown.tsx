@@ -19,8 +19,12 @@ export function UserProfileDropdown() {
   const router = useRouter()
 
   const handleLogout = async () => {
-    await supabase.auth.signOut()
-    router.push("/auth/login")
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      console.error("Sign-out failed:", error)
+      return
+    }
+    router.replace("/auth/login")
   }
 
   const handleProfile = () => {
