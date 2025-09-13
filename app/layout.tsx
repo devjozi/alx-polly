@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const geistSans = Inter({
   variable: "--font-geist-sans",
@@ -28,8 +29,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navigation />
-        <main>{children}</main>
+        <AuthProvider>
+          <Navigation />
+          <main>{children}</main>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -2,11 +2,18 @@
 
 import { useAuth } from "@/hooks/use-auth"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import { supabase } from "@/lib/supabaseClient"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export function Navigation() {
-  const { isAuthenticated, user, logout } = useAuth()
+  const { isAuthenticated, user } = useAuth()
+  const router = useRouter()
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    router.push("/auth/login")
+  }
 
   return (
     <nav className="border-b bg-white">
@@ -25,10 +32,10 @@ export function Navigation() {
                   Polls
                 </Link>
                 <Link 
-                  href="/polls/create" 
+                  href="/dashboard" 
                   className="text-gray-600 hover:text-gray-900 transition-colors"
                 >
-                  Create Poll
+                  Dashboard
                 </Link>
               </div>
             )}
@@ -38,9 +45,9 @@ export function Navigation() {
             {isAuthenticated ? (
               <div className="flex items-center space-x-4">
                 <span className="text-sm text-gray-600">
-                  Welcome, {user?.name}
+                  Welcome, {user?.user_metadata.full_name}
                 </span>
-                <Button variant="outline" size="sm" onClick={logout}>
+                <Button variant="outline" size="sm" onClick={handleLogout}>
                   Sign Out
                 </Button>
               </div>

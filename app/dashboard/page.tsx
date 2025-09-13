@@ -1,22 +1,12 @@
 "use client"
 
-import { useAuth } from "@/hooks/use-auth"
 import { usePolls } from "@/hooks/use-polls"
 import { PollsList } from "@/components/polls/polls-list"
 import { Button } from "@/components/ui/button"
+import withAuth from "@/components/withAuth"
 
-export default function DashboardPage() {
-  const { isAuthenticated } = useAuth()
+function DashboardPage() {
   const { polls, isLoading } = usePolls()
-
-  if (!isAuthenticated) {
-    return (
-      <div className="container mx-auto py-12">
-        <p className="text-muted-foreground">Please sign in to view your dashboard.</p>
-        <Button asChild className="mt-4"><a href="/auth/login">Sign In</a></Button>
-      </div>
-    )
-  }
 
   return (
     <div className="container mx-auto py-8">
@@ -28,3 +18,5 @@ export default function DashboardPage() {
     </div>
   )
 }
+
+export default withAuth(DashboardPage)

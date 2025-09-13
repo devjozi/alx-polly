@@ -1,4 +1,7 @@
-export interface User {
+import { User as SupabaseUser } from "@supabase/supabase-js"
+
+// App-specific user profile (extends Supabase user with additional fields)
+export interface UserProfile {
   id: string
   email: string
   name: string
@@ -6,12 +9,15 @@ export interface User {
   createdAt: Date
 }
 
+// For auth context, use Supabase User directly
+export type User = SupabaseUser
+
 export interface Poll {
   id: string
   title: string
   description?: string
   options: PollOption[]
-  author: User
+  author: UserProfile
   createdAt: Date
   updatedAt: Date
   expiresAt?: Date
@@ -42,7 +48,7 @@ export interface CreatePollData {
 }
 
 export interface AuthState {
-  user: User | null
+  user: SupabaseUser | null
   isLoading: boolean
   isAuthenticated: boolean
 }
