@@ -2,18 +2,11 @@
 
 import { useAuth } from "@/hooks/use-auth"
 import { Button } from "@/components/ui/button"
-import { supabase } from "@/lib/supabaseClient"
+import { UserProfileDropdown } from "@/components/user-profile-dropdown"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 
 export function Navigation() {
-  const { isAuthenticated, user } = useAuth()
-  const router = useRouter()
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut()
-    router.push("/auth/login")
-  }
+  const { isAuthenticated } = useAuth()
 
   return (
     <nav className="border-b bg-white">
@@ -43,14 +36,7 @@ export function Navigation() {
 
           <div className="flex items-center space-x-4">
             {isAuthenticated ? (
-              <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-600">
-                  Welcome, {user?.user_metadata.full_name}
-                </span>
-                <Button variant="outline" size="sm" onClick={handleLogout}>
-                  Sign Out
-                </Button>
-              </div>
+              <UserProfileDropdown />
             ) : (
               <div className="flex items-center space-x-2">
                 <Button variant="outline" asChild>
